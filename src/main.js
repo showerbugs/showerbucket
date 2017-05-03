@@ -4,12 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import VueFire from 'vuefire'
 import router from './router'
-import * as firebase from 'firebase'
 
 Vue.use(VueFire)
-
-
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

@@ -28,17 +28,9 @@
 
 <script>
 import firebase from 'firebase'
+import { firebaseApp } from './firebase'
 
-var config = {
-  apiKey: "AIzaSyAlvdvSaAuHxTyAf9rSyQXf22lKUX-LFaw",
-  authDomain: "showerbucket-1a754.firebaseapp.com",
-  databaseURL: "https://showerbucket-1a754.firebaseio.com",
-  projectId: "showerbucket-1a754",
-  storageBucket: "showerbucket-1a754.appspot.com",
-  messagingSenderId: "203690076097"
-};
-
-var db = firebase.initializeApp(config).database()
+let db = firebaseApp.database()
 
 export default {
   data() {
@@ -103,7 +95,7 @@ export default {
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
       })
-      
+
       this.link = ''
     }
   },
