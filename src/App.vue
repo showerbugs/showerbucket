@@ -43,67 +43,71 @@ var db = firebase.initializeApp(config).database()
 export default {
   data() {
     return {
-      bucket: '',
-      link: '',
       user: null,
+      bucket: '',
       selectedBucket: null,
+      link: ''
     }
   },
   firebase() {
     return {
-      links: db.ref(),
       buckets: {
         source: db.ref('buckets'),
-        readyCallback(){
-          if(this.buckets.length > 0)
+        readyCallback() {
+          if(this.buckets.length > 0) {
             this.selectedBucket = this.buckets[0]
+            this.bucketChanged()
+          }
         },
       },
+      links: db.ref('links')
     }
   },
   methods: {
+    loginGoogle() {
+      var provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider).then((result) => {
+        var token = result.credential.accessToken
+        this.user = result.user
+      }).catch((error) => {
+        console.log(error)
+      });
+    },
+    logout() {
+      firebase.auth().signOut().then(() => {
+        this.user = null
+      }).catch((error) => {
+        console.log(error)
+      });
+    },
     addBucket() {
       if(this.bucket === '') return
+
       this.$firebaseRefs.buckets.push({
         name: this.bucket,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
       })
+
       this.bucket = ''
+    },
+    bucketChanged() {
+      this.$bindAsArray('links', db.ref(`links/${this.selectedBucket['.key']}`))
     },
     addLink() {
       if(this.link === '') return
+
       this.$firebaseRefs.links.push({
         link: this.link,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
       })
+      
       this.link = ''
-    },
-    selectBucket(){
-      this.$bindLinks('links', db.ref('buckets/' + this.bucket['.key']))
-    },
-    loginGoogle(){
-      var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).then((result) => {
-        var token = result.credential.accessToken
-        this.user = result.user
-        console.log(result)
-      }).catch(function(error)  {
-        console.log(error)
-      });
-    },
-    logout(){
-      firebase.auth().signOut().then(() => {
-        this.user = null
-      }, function(error) {
-      });
-    },
-    bucketChanged(){
-      alert(this.selectedBucket.name + ', ' + this.selectedBucket['.key'])
     }
   },
-  beforeCreate(){
+  beforeCreate() {
     firebase.auth().onAuthStateChanged((user) => {
       this.user = user
     });
