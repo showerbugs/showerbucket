@@ -27,7 +27,6 @@ export default {
   methods: {
     addLink() {
       if (this.link === '') return
-
       this.$firebaseRefs.links.push({
         link: this.link,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
@@ -40,14 +39,9 @@ export default {
   firebase() {
     return {
       links: {
-        source: db.ref('links')
+        source: db.ref(`links/${this.$route.params.bucketId}`)
       }
     }
-  },
-  beforeCreate() {
-    const bucketId = this.$route.params.bucketId
-
-    this.$bindAsArray('links', db.ref(`links/${bucketId}`))
   }
 }
 </script>
