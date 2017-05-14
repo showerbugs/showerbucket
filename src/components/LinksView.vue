@@ -32,14 +32,13 @@ export default {
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
       })
-
       this.link = ''
     }
   },
   firebase() {
     return {
       links: {
-        source: db.ref(`links/${this.$route.params.bucketId}`)
+        source: db.ref(`bucket-links/${this.$route.params.bucketId}`)
       }
     }
   }

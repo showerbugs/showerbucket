@@ -13,7 +13,9 @@ export default {
   props: ['link'],
   data () {
     return {
-      preview: {}
+      preview: {
+        Images: []
+      }
     }
   },
   methods: {
@@ -25,16 +27,15 @@ export default {
       }
       opt.mode = 'cors'
       try {
-        let response = await fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`, opt);
-        this.preview = await response.json();
-        console.log(this.preview)
+        let response = await fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`, opt)
+        this.preview = await response.json()
       } catch (e) {
-        return e.message;
+        return e.message
       }
     }
   },
   created() {
-      this.getPreview(this.link.link);
+      this.getPreview(this.link.link)
   }
 }
 </script>
