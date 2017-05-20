@@ -19,19 +19,27 @@ export default {
     }
   },
   methods: {
-    getPreview: async function (url, opt = {}) {
-      opt.headers = {
-        'Method': 'GET',
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-      }
-      opt.mode = 'cors'
-      try {
-        let response = await fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`, opt)
-        this.preview = await response.json()
-      } catch (e) {
-        return e.message
-      }
+    getPreview: function (url, opt = {}) {
+      let response =  fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`)
+      .then(res => res.json())
+      .then(json => {
+        this.preview = json.Preview
+      })
+      //let response = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
+      ///this.preview = await response.json()
+      // opt.method = 'GET'
+      // // opt.headers = new Headers({
+      // //   'Content-Type': 'application/json',
+      // // });
+      // opt.mode = 'cors'
+      // try {
+      //   let response = await fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`, opt)
+      //   //let response = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
+      //   this.preview = await response.json()
+      // } catch (e) {
+      //   console.log(e.message);
+      //   return e.message
+      // }
     }
   },
   created() {
