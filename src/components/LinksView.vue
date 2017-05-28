@@ -1,11 +1,7 @@
 <template>
   <div>
-    <!-- <h3>{{ bucket.name }}</h3> -->
-    <input v-model="link" @keyup.enter="addLink">
-    <hr>
-    <ul>
-      <app-link :key="link['.key']" :link="link" v-for="link in links"></app-link>
-    </ul>
+    <v-text-field v-model="link" @keyup.enter.native.stop="addLink" label="Add your new link"></v-text-field>
+    <app-link :key="link['.key']" :link="link" v-for="link in links"></app-link>
   </div>
 </template>
 
@@ -26,12 +22,16 @@ export default {
   },
   methods: {
     addLink() {
-      if (this.link === '') return
+      if (this.link === '') {
+        return
+      }
+
       this.$firebaseRefs.links.push({
         link: this.link,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
       })
+
       this.link = ''
     }
   },

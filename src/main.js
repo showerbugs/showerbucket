@@ -3,9 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import VueFire from 'vuefire'
+import Vuetify from 'vuetify'
 import router from './router'
 
 Vue.use(VueFire)
+Vue.use(Vuetify)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

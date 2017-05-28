@@ -1,14 +1,43 @@
 <template>
-  <li>
-    <router-link v-if="!isEdit" :to="{name: 'links', params: {bucketId: bucket['.key']}}" tag="a">{{ bucket.name }}</router-link>
-    <button v-if="!isEdit" @click="enableEdit">Edit</button>
+  <v-list-item>
+    <v-list-tile>
+      <template v-if="!isEdit">
+        <router-link :to="{name: 'links', params: {bucketId: bucket['.key']}}" tag="v-list-tile-content">
+          <v-list-tile-title>{{ bucket.name }}</v-list-tile-title>
+        </router-link>
 
-    <input v-if="isEdit" v-model="newBucketName" @keyup.enter="editBucket">
-    <button v-if="isEdit" @click="editBucket">OK</button>
-    <button v-if="isEdit" @click="disableEdit">Cancel</button>
+        <v-list-tile-action>
+          <v-btn icon ripple @click.native.stop="enableEdit">
+            <v-icon class="grey--text text--lighten-1">mode_edit</v-icon>
+          </v-btn>
+        </v-list-tile-action>
 
-    <button @click="deleteBucket">Delete</button>
-  </li>
+        <v-list-tile-action>
+          <v-btn icon ripple @click.native.stop="deleteBucket">
+            <v-icon class="grey--text text--lighten-1">delete</v-icon>
+          </v-btn>
+        </v-list-tile-action>
+      </template>
+
+      <template v-else>
+        <v-list-tile-content>
+          <v-text-field v-model="newBucketName" @keyup.enter.native.stop="editBucket"></v-text-field>
+        </v-list-tile-content>
+        
+        <v-list-tile-action>
+          <v-btn icon ripple @click.native.stop="editBucket">
+            <v-icon class="grey--text text--lighten-1">done</v-icon>
+          </v-btn>
+        </v-list-tile-action>
+
+        <v-list-tile-action>
+          <v-btn icon ripple @click.native.stop="disableEdit">
+            <v-icon class="grey--text text--lighten-1">clear</v-icon>
+          </v-btn>
+        </v-list-tile-action>
+      </template>
+    </v-list-tile>
+  </v-list-item>
 </template>
 
 <script>
@@ -35,7 +64,7 @@ export default {
     editBucket() {
       const bucket = {
         name: this.newBucketName,
-        createdAt: this.bucket.createdAt,
+        createdAt: this.bucket.createdAt || firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP
       }
 
@@ -48,7 +77,7 @@ export default {
       this.disableEdit()
     },
     deleteBucket() {
-
+      alert('TODO: deleteBucket')
     }
   }
 }

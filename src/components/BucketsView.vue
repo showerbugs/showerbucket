@@ -1,9 +1,9 @@
 <template>
   <div>
     <input v-model="bucket" @keyup.enter="addBucket">
-    <ul>
+    <v-list two-line subheader>
       <app-bucket :key="bucket['.key']" :bucket="bucket" :user="user" v-for="bucket in userBuckets"></app-bucket>
-    </ul>
+    </v-list>
   </div>
 </template>
 

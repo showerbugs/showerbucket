@@ -1,11 +1,15 @@
 <template>
-  <li><a :href="link.link">{{ link.link }}</a>
-    <div>
-      <h1>{{preview.Title}}</h1>
-      <h5>{{preview.Description}}</h5>
-      <img :src="preview.Images[0]" width="400"/>
-    </div>
-  </li>
+  <v-card>
+    <v-card-row class="blue-grey darken-1">
+      <v-card-title>
+        <span class="white--text">{{ preview.Title }}</span>
+      </v-card-title>
+    </v-card-row>
+
+    <v-card-row :img="preview.Images[0]" height="300px"></v-card-row>
+
+    <v-card-text class="blue-grey darken-3 white--text">{{ preview.Description }}</v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -20,26 +24,11 @@ export default {
   },
   methods: {
     getPreview: function (url, opt = {}) {
-      let response =  fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`)
+      let response = fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`)
       .then(res => res.json())
       .then(json => {
         this.preview = json.Preview
       })
-      //let response = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
-      ///this.preview = await response.json()
-      // opt.method = 'GET'
-      // // opt.headers = new Headers({
-      // //   'Content-Type': 'application/json',
-      // // });
-      // opt.mode = 'cors'
-      // try {
-      //   let response = await fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`, opt)
-      //   //let response = await fetch(`https://jsonplaceholder.typicode.com/posts/1`)
-      //   this.preview = await response.json()
-      // } catch (e) {
-      //   console.log(e.message);
-      //   return e.message
-      // }
     }
   },
   created() {
