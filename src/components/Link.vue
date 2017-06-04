@@ -1,14 +1,15 @@
 <template>
-  <v-card>
-    <v-card-row class="blue-grey darken-1">
-      <v-card-title>
-        <span class="white--text">{{ preview.Title }}</span>
-      </v-card-title>
-    </v-card-row>
+  <v-card horizontal>
+    <v-card-row :img="preview.Images[0]" height="130px"></v-card-row>
+    <v-card-column>
+      <v-card-row height="75px" class="white black--text">
+        <v-card-text>
+          <strong>{{ preview.Title }}</strong>
+          <div>{{ preview.Description }}</div>
+        </v-card-text>
+      </v-card-row>
 
-    <v-card-row :img="preview.Images[0]" height="300px"></v-card-row>
-
-    <v-card-text class="blue-grey darken-3 white--text">{{ preview.Description }}</v-card-text>
+    </v-card-column>
   </v-card>
 </template>
 

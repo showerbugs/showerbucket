@@ -2,7 +2,7 @@
   <div>
     <v-toolbar class="green">
       <v-toolbar-side-icon light @click.native.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <router-link :to="{name: 'home'}" tag="v-toolbar-title" class="title-home">Showerbucket</router-link>
+      <router-link :to="{name: 'home'}" tag="v-toolbar-title" class="title-home white--text">Showerbucket</router-link>
     </v-toolbar>
 
     <v-navigation-drawer :disable-route-watcher="true" persistent light :mini-variant.sync="mini" v-model="drawer">

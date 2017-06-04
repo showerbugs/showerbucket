@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-text-field v-model="link" @keyup.enter.native.stop="addLink" label="Add your new link"></v-text-field>
-    <app-link :key="link['.key']" :link="link" v-for="link in links"></app-link>
+    <app-link class="link-card" :key="link['.key']" :link="link" v-for="link in links"></app-link>
   </div>
 </template>
 
@@ -44,3 +44,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .link-card {
+    margin: 20px 0;
+  }
+</style>
