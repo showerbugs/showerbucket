@@ -2,8 +2,22 @@
   <div>
     <v-text-field v-model="bucket" @keyup.enter.native.stop="addBucket" label="Add your new bucket"></v-text-field>
     <v-list two-line subheader>
-      <app-bucket :key="bucket['.key']" :bucket="bucket" :user="user" v-for="bucket in userBuckets"></app-bucket>
+      <app-bucket :open-delete-dialog="openDeleteDialog" :key="bucket['.key']" :bucket="bucket" :user="user" v-for="bucket in userBuckets"></app-bucket>
     </v-list>
+    <v-dialog v-model="dialog">
+      <v-card>
+        <v-card-row>
+          <v-card-title>Are you sure you want to delete {{ bucket.name }}?</v-card-title>
+        </v-card-row>
+        <v-card-row>
+          <v-card-text>Links included in the bucket will also be deleted.</v-card-text>
+        </v-card-row>
+        <v-card-row actions>
+          <v-btn class="green--text darken-1" flat="flat" @click.native="dialog = false">Disagree</v-btn>
+          <v-btn class="green--text darken-1" flat="flat" @click.native="deleteBucket">Agree</v-btn>
+        </v-card-row>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -21,6 +35,7 @@ export default {
     return {
       user: null,
       bucket: '',
+      dialog: false
     }
   },
   firebase() {
@@ -31,6 +46,20 @@ export default {
     }
   },
   methods: {
+    openDeleteDialog(bucketName, bucketKey) {
+      this.dialog = true
+      this.deleteBucketKey = bucketKey
+    },
+    deleteBucket() {
+      if(!this.deleteBucketKey) return
+
+      const bucketKey = this.deleteBucketKey
+      this.deleteBucketKey = null
+      this.dialog = false
+      db.ref(`/buckets/${bucketKey}`).remove()
+      db.ref(`/user-buckets/${this.user.uid}/${bucketKey}`).remove()
+      db.ref(`bucket-links/${bucketKey}`).remove()
+    },
     addBucket() {
       if (this.bucket === '') return
 

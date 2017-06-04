@@ -13,7 +13,7 @@
         </v-list-tile-action>
 
         <v-list-tile-action>
-          <v-btn icon ripple @click.native.stop="deleteBucket">
+          <v-btn icon ripple @click.native.stop="openDeleteDialog(bucket.name, bucket['.key'])">
             <v-icon class="grey--text text--lighten-1">delete</v-icon>
           </v-btn>
         </v-list-tile-action>
@@ -46,7 +46,7 @@ import { firebase } from '../firebase'
 const db = firebase.database()
 
 export default {
-  props: ['bucket', 'user'],
+  props: ['bucket', 'user', 'openDeleteDialog'],
   data() {
     return {
       isEdit: false,
@@ -73,11 +73,7 @@ export default {
       updates[`/user-buckets/${this.user.uid}/${this.bucket['.key']}`] = bucket
 
       db.ref().update(updates).catch((error) => {console.log(error)})
-
       this.disableEdit()
-    },
-    deleteBucket() {
-      alert('TODO: deleteBucket')
     }
   }
 }
