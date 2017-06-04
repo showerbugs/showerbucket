@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input v-model="bucket" @keyup.enter="addBucket">
+    <v-text-field v-model="bucket" @keyup.enter.native.stop="addBucket" label="Add your new bucket"></v-text-field>
     <v-list two-line subheader>
       <app-bucket :key="bucket['.key']" :bucket="bucket" :user="user" v-for="bucket in userBuckets"></app-bucket>
     </v-list>
