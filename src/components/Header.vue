@@ -5,7 +5,7 @@
       <router-link :to="{name: 'home'}" tag="v-toolbar-title" class="title-home">Showerbucket</router-link>
     </v-toolbar>
 
-    <v-navigation-drawer persistent light :mini-variant.sync="mini" v-model="drawer">
+    <v-navigation-drawer :disable-route-watcher="true" persistent light :mini-variant.sync="mini" v-model="drawer">
       <v-list>
 
         <template v-if="user">
