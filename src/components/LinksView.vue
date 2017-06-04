@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-text-field v-model="link" @keyup.enter.native.stop="addLink" label="Add your new link"></v-text-field>
-    <app-link class="link-card" :key="link['.key']" :link="link" v-for="link in links"></app-link>
+    <app-link class="link-card" :key="link['.key']" :link="link" v-for="link in links" :delete-link="deleteLink"></app-link>
   </div>
 </template>
 
@@ -33,7 +33,11 @@ export default {
       })
 
       this.link = ''
-    }
+    },
+    deleteLink(linkKey, event) {
+      db.ref(`bucket-links/${this.$route.params.bucketId}/${linkKey}`).remove()
+      event.preventDefault();
+    },
   },
   firebase() {
     return {
@@ -46,6 +50,8 @@ export default {
 </script>
 <style scoped>
   .link-card {
+    display: block;
+    text-decoration: none;
     margin: 20px 0;
   }
 </style>
