@@ -65,6 +65,7 @@ export default {
 
       const bucket = {
         name: this.bucket,
+        owner: this.user.uid,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP,
       }
