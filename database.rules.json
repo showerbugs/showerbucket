@@ -1,6 +1,22 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    ".read": true,
+    ".write": true,
+    "buckets": {
+        ".write": "auth != null && data.child('owner').val() == auth.id"
+    },
+    "user-buckets": {
+        "$uid": {
+            ".write": "auth != null && auth.uid == $uid"
+        }
+    },
+    "bucket-links": {
+        "$bucketId": {
+            ".write": "auth != null && root.child('buckets/' + $bucketId).child('owner').val() == auth.uid"
+        }
+    },
+    "links": {
+        ".write": true
+    }
   }
 }
