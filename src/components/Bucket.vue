@@ -64,7 +64,7 @@ export default {
     editBucket() {
       const bucket = {
         name: this.newBucketName,
-        name: this.bucket.owner,
+        owner: this.bucket.owner,
         createdAt: this.bucket.createdAt || firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP
       }
