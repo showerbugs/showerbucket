@@ -62,7 +62,7 @@ export default {
       this.isEdit = false
     },
     editBucket() {
-      cosnt newBucketData = {
+      const newBucketData = {
         name: this.newBucketName,
         updatedAt: firebase.database.ServerValue.TIMESTAMP
       }
