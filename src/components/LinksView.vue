@@ -22,15 +22,12 @@ export default {
   },
   methods: {
     addLink() {
-      if (this.link === '') {
-        return
+      if(!this.hasProtocol(this.link)){
+        this.link = 'http://' + this.link
       }
       if(!this.isValidUrl(this.link)){
-        var newLink = "http://" + this.link;
-        if(!this.isValidUrl(newLink)){
-          return
-        }
-        this.link = newLink
+        alert('Invalid link')
+        return
       }
       this.$firebaseRefs.links.push({
         link: this.link,
@@ -44,9 +41,12 @@ export default {
       db.ref(`bucket-links/${this.$route.params.bucketId}/${linkKey}`).remove()
       event.preventDefault();
     },
+    hasProtocol(url) {
+      return new RegExp("^(http|https|ftp)://", "i").test(url)
+    },
     isValidUrl(url) {
-      var r = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)
-      return r.test(url)
+      if(this.link === '') return false
+      return new RegExp(/(ftp|http|https):\/\/(\\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/).test(url)
     }
   },
   firebase() {
