@@ -62,16 +62,15 @@ export default {
       this.isEdit = false
     },
     editBucket() {
-      const bucket = {
+      cosnt newBucketData = {
         name: this.newBucketName,
-        owner: this.bucket.owner,
-        createdAt: this.bucket.createdAt || firebase.database.ServerValue.TIMESTAMP,
         updatedAt: firebase.database.ServerValue.TIMESTAMP
       }
+      const newBucket = Object.assign(newBucketData, this.bucket)
 
       let updates = {}
-      updates[`/buckets/${this.bucket['.key']}`] = bucket
-      updates[`/user-buckets/${this.user.uid}/${this.bucket['.key']}`] = bucket
+      updates[`/buckets/${this.bucket['.key']}`] = newBucket
+      updates[`/user-buckets/${this.user.uid}/${this.bucket['.key']}`] = newBucket
 
       db.ref().update(updates).catch((error) => {console.log(error)})
       this.disableEdit()
