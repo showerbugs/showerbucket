@@ -31,15 +31,15 @@ export default {
   },
   methods: {
     getPreview: function (url, opt = {}) {
-      let response = fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`)
+      fetch(`https://us-central1-showerbucket-1a754.cloudfunctions.net/preview?url=${url}`)
       .then(res => res.json())
       .then(json => {
         this.preview = json.Preview
       })
-    },
+    }
   },
-  created() {
-      this.getPreview(this.link.link)
+  created () {
+    this.getPreview(this.link.link)
   }
 }
 </script>

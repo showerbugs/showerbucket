@@ -47,21 +47,21 @@ const db = firebase.database()
 
 export default {
   props: ['bucket', 'user', 'openDeleteDialog'],
-  data() {
+  data () {
     return {
       isEdit: false,
       newBucketName: null
     }
   },
   methods: {
-    enableEdit() {
+    enableEdit () {
       this.isEdit = true
       this.newBucketName = this.bucket.name
     },
-    disableEdit() {
+    disableEdit () {
       this.isEdit = false
     },
-    editBucket() {
+    editBucket () {
       const newBucketData = {
         name: this.newBucketName,
         updatedAt: firebase.database.ServerValue.TIMESTAMP
@@ -72,7 +72,9 @@ export default {
       updates[`/buckets/${this.bucket['.key']}`] = newBucket
       updates[`/user-buckets/${this.user.uid}/${this.bucket['.key']}`] = newBucket
 
-      db.ref().update(updates).catch((error) => {console.log(error)})
+      db.ref().update(updates)
+      .catch(error => console.log(error))
+
       this.disableEdit()
     }
   }

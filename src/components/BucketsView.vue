@@ -31,14 +31,14 @@ export default {
   components: {
     appBucket
   },
-  data() {
+  data () {
     return {
       user: null,
       bucket: '',
       dialog: false
     }
   },
-  firebase() {
+  firebase () {
     return {
       userBuckets: {
         source: db.ref('user-buckets')
@@ -46,28 +46,34 @@ export default {
     }
   },
   methods: {
-    openDeleteDialog(bucketName, bucketKey) {
+    openDeleteDialog (bucketName, bucketKey) {
       this.dialog = true
       this.deleteBucketKey = bucketKey
     },
-    deleteBucket() {
-      if(!this.deleteBucketKey) return
+    deleteBucket () {
+      if (!this.deleteBucketKey) {
+        return
+      }
 
       const bucketKey = this.deleteBucketKey
+
       this.deleteBucketKey = null
       this.dialog = false
+
       db.ref(`/buckets/${bucketKey}`).remove()
       db.ref(`/user-buckets/${this.user.uid}/${bucketKey}`).remove()
       db.ref(`bucket-links/${bucketKey}`).remove()
     },
-    addBucket() {
-      if (this.bucket === '') return
+    addBucket () {
+      if (this.bucket === '') {
+        return
+      }
 
       const bucket = {
         name: this.bucket,
         owner: this.user.uid,
         createdAt: firebase.database.ServerValue.TIMESTAMP,
-        updatedAt: firebase.database.ServerValue.TIMESTAMP,
+        updatedAt: firebase.database.ServerValue.TIMESTAMP
       }
       const bucketKey = db.ref().child('buckets').push().key
 
@@ -75,11 +81,13 @@ export default {
       updates[`/buckets/${bucketKey}`] = bucket
       updates[`/user-buckets/${this.user.uid}/${bucketKey}`] = bucket
 
-      db.ref().update(updates).catch((error) => {console.log(error)})
+      db.ref().update(updates)
+      .catch(error => console.log(error))
+
       this.bucket = ''
-    },
+    }
   },
-  beforeCreate() {
+  beforeCreate () {
     firebase.auth().onAuthStateChanged((user) => {
       this.user = user
 

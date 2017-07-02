@@ -51,40 +51,43 @@
 </template>
 
 <script>
-  import firebase from 'firebase'
+import firebase from 'firebase'
 
-  export default {
-    data() {
-      return {
-        drawer: false,
-        mini: false,
-        user: null
-      }
+export default {
+  data () {
+    return {
+      drawer: false,
+      mini: false,
+      user: null
+    }
+  },
+  methods: {
+    loginWithGoogle () {
+      const provider = new firebase.auth.GoogleAuthProvider()
+
+      firebase.auth().signInWithPopup(provider)
+      .then(result => {
+        this.$router.push({ name: 'buckets' })
+      })
+      .catch(error => console.log(error))
     },
-    methods: {
-      loginWithGoogle() {
-        const provider = new firebase.auth.GoogleAuthProvider()
-        firebase.auth().signInWithPopup(provider).then((result) => {
-          this.$router.push({name: 'buckets'})
-        }).catch((error) => {
-          console.log(error)
-        })
-      },
-      logout() {
-        firebase.auth().signOut().then(() => {
-          this.user = null
-          this.$router.push({name: 'home'})
-        }).catch((error) => {
-          console.log(error)
-        });
-      },
-    },
-    beforeCreate() {
-      firebase.auth().onAuthStateChanged((user) => {
-        this.user = user
+    logout () {
+      firebase.auth().signOut()
+      .then(() => {
+        this.user = null
+        this.$router.push({ name: 'home' })
+      })
+      .catch(error => {
+        console.log(error)
       })
     }
+  },
+  beforeCreate () {
+    firebase.auth().onAuthStateChanged(user => {
+      this.user = user
+    })
   }
+}
 </script>
 
 <style>

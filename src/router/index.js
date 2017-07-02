@@ -21,16 +21,14 @@ router.beforeEach((to, from, next) => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         next()
-      }
-      else {
+      } else {
         alert('Please signin first!')
         next({ name: 'home' })
       }
     })
 
     next(false)
-  }
-  else {
+  } else {
     next()
   }
 })

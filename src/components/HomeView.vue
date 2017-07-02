@@ -6,15 +6,15 @@
 </template>
 
 <script>
-  import { firebase } from '../firebase'
+import { firebase } from '../firebase'
 
-  export default{
-    beforeCreate() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.$router.push({name: 'buckets'})
-        }
-      });
-    }
+export default{
+  beforeCreate () {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.$router.push({name: 'buckets'})
+      }
+    })
   }
+}
 </script>
