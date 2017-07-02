@@ -28,6 +28,9 @@ main {
   position: relative;
 }
 
+.home-container {
+}
+
 .home-container::after {
   content: '';
   background-image: url('../assets/simpson1.png');
@@ -38,5 +41,6 @@ main {
   left: 0;
   right: 0;
   position: absolute;
+  z-index: -100;
 }
 </style>

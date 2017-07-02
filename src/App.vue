@@ -24,3 +24,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.application {
+  z-index: 0;
+}
+</style>
